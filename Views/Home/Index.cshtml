@@ -1,0 +1,462 @@
+﻿@using KA_PAYMENT_GATEWAY.Models
+@{
+    ViewData["Title"] = "Home Page";
+    var payment = (Payment)ViewBag.Payment;
+    var BEN_Name = (string)ViewBag.merchantName;
+    var clientToken = (string)ViewBag.clientToken;
+}
+
+
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Snippet - BBBootstrap</title>
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap' rel='stylesheet' />
+<link href='#' rel='stylesheet' />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif
+    }
+
+    .container {
+        margin: 30px auto;
+    }
+
+        .container .card {
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background: #fff;
+            border-radius: 0px;
+        }
+
+    body {
+        background: #eee
+    }
+
+
+
+    .btn.btn-primary {
+        background-color: #ddd;
+        color: black;
+        box-shadow: none;
+        border: none;
+        font-size: 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+        .btn.btn-primary:focus {
+            box-shadow: none;
+        }
+
+    .container .card .img-box {
+        width: 80px;
+        height: 50px;
+    }
+
+    .container .card img {
+        width: 100%;
+        object-fit: fill;
+    }
+
+    .container .card .number {
+        font-size: 24px;
+    }
+
+    .container .card-body .btn.btn-primary .fab.fa-cc-paypal {
+        font-size: 32px;
+        color: #3333f7;
+    }
+
+    .fab.fa-cc-amex {
+        color: #1c6acf;
+        font-size: 32px;
+    }
+
+    .fab.fa-cc-mastercard {
+        font-size: 32px;
+        color: red;
+    }
+
+    .fab.fa-cc-discover {
+        font-size: 32px;
+        color: orange;
+    }
+
+    .c-green {
+        color: green;
+    }
+    .c-red {
+        color: red;
+    }
+    .c-blue {
+        color: blue;
+    }
+
+    .box {
+        height: 40px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ddd;
+    }
+
+    .btn.btn-primary.payment {
+        background-color: #1c6acf;
+        color: white;
+        border-radius: 0px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+    }
+
+
+    .form__div {
+        height: 50px;
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 45px;
+        font-size: 14px;
+        border: 1px solid #DADCE0;
+        border-radius: 0;
+        outline: none;
+        padding: 2px;
+        background: none;
+        z-index: 1;
+        box-shadow: none;
+    }
+
+    .form__label {
+        position: absolute;
+        left: 16px;
+        top: 10px;
+        background-color: #fff;
+        color: #80868B;
+        font-size: 16px;
+        transition: .3s;
+        text-transform: uppercase;
+    }
+
+    .form-control:focus + .form__label {
+        top: -8px;
+        left: 12px;
+        color: #1A73E8;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 10;
+    }
+
+    .form-control:not(:placeholder-shown).form-control:not(:focus) + .form__label {
+        top: -8px;
+        left: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 10;
+    }
+
+    .form-control:focus {
+        border: 1.5px solid #1A73E8;
+        box-shadow: none;
+    }
+</style>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="~/js/stripe.js"></script>
+<body className='snippet-body'>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-lg-0 mb-3">
+                <div class="card p-3">
+                    <div class="img-box">
+
+                        <img src="~/logos/visa.png" />
+                    </div>
+                    <div class="number">
+                        <label class="fw-bold" for="">**** **** **** 1060</label>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                        <small><span class="fw-bold">Name:</span><span>Kumar</span></small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-lg-0 mb-3">
+                <div class="card p-3">
+                    <div class="img-box">
+
+                        <img src="~/logos/mastercard-logo.png" />
+                    </div>
+                    <div class="number">
+                        <label class="fw-bold">**** **** **** 1060</label>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                        <small><span class="fw-bold">Name:</span><span>Kumar</span></small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-lg-0 mb-3">
+                <div class="card p-3">
+                    <div class="img-box">
+                        <img src="~/logos/discover-logo.png" />
+                    </div>
+                    <div class="number">
+                        <label class="fw-bold">**** **** **** 1060</label>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <small><span class="fw-bold">Expiry date:</span><span>10/16</span></small>
+                        <small><span class="fw-bold">Name:</span><span>Kumar</span></small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="card p-3">
+                    <p class="mb-0 fw-bold h4">Payment Methods</p>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card p-3">
+                    <div class="card-body border p-0">
+                        <p>
+                            <a class="btn btn-primary w-100 h-100 d-flex align-items-center justify-content-between"
+                               data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
+                               aria-controls="collapseExample">
+                                <span class="fw-bold">PayPal</span>
+                                <span class="fab fa-cc-paypal">
+                                </span>
+                            </a>
+                        </p>
+                        <div class="collapse p-3 pt-0" id="collapseExample">
+                            <div class="row">
+                                <div class="col-lg-5 mb-lg-0 mb-3">
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Beneficiary Name:</span><span class="c-green">
+                                            <b>@BEN_Name</b>
+                                        </span>
+                                    </p>
+                                    <p class="h4 mb-0">Payment Details: <b>@payment.Describtion</b></p>
+
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Net:</span><span class="c-green"> @payment.NetAmount @payment.Currency</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Fee:</span><span class="c-red"> @payment.FeeAmount @payment.Currency</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Tax:</span><span class="c-red"> @payment.TaxAmount @payment.Currency</span>
+                                    </p>
+                                    <hr />
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Total:</span><span class="c-blue"> @payment.TotalAmount @payment.Currency</span>
+                                    </p>
+
+                                </div>
+
+                                <div class="col-lg-7">
+                                    <form form asp-action="PaymentWithPaypal" asp-controller="Home" method="post">
+                                        <div class="row">
+                                            <input name="clientToken" value="@clientToken" hidden="hidden" />
+                                            <button class="btn btn-info" type="submit"><i class="bi bi-paypal">Pay By PayPal</i></button>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body border p-0">
+                        <p>
+                            <a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
+                               data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
+                               aria-controls="collapseExample">
+                                <span class="fw-bold">Credit Card</span>
+                                <span class="">
+                                    <span class="fab fa-cc-amex"></span>
+                                    <span class="fab fa-cc-mastercard"></span>
+                                    <span class="fab fa-cc-discover"></span>
+                                </span>
+                            </a>
+                        </p>
+                        <div class="collapse show p-3 pt-0" id="collapseExample">
+                            <div class="row">
+                                <div class="col-lg-5 mb-lg-0 mb-3">
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Beneficiary Name:</span><span class="c-green">
+                                           <b>@BEN_Name</b>
+                                        </span>
+                                    </p>
+                                    <p class="h4 mb-0">Payment Details: <b>@payment.Describtion</b></p>
+
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Net:</span><span class="c-green"> @payment.NetAmount @payment.Currency</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Fee:</span><span class="c-red"> @payment.FeeAmount @payment.Currency</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Tax:</span><span class="c-red"> @payment.TaxAmount @payment.Currency</span>
+                                    </p>
+                                    <hr />
+                                    <p class="mb-0">
+                                        <span class="fw-bold">Total:</span><span class="c-blue"> @payment.TotalAmount @payment.Currency</span>
+                                    </p>
+
+
+
+
+                                </div>
+                                <div class="col-lg-7">
+                                    <form form asp-action="PayWithStripe" asp-controller="Home" method="post" id="payment-form">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form__div">
+                                                    <span id="card-number" class="form-control"></span>
+                                                    <label for="" class="form__label">Card Number</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form__div">
+                                                    <span id="card-exp" class="form-control"></span>
+                                                    <label for="" class="form__label">MM / yy</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form__div">
+                                                    <span id="card-cvc" class="form-control"></span>
+                                                    <label for="" class="form__label">cvv code</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form__div">
+                                                    <input name="StripeEmail" class="form-control">
+                                                    <label for="" class="form__label">Email</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <input class="StripeToken" name="StripeToken" type="text" hidden="hidden" />
+                                                <input name="clientToken" value="@clientToken" hidden="hidden" />
+                                                <button class="btn btn-danger" type="submit">Pay By Stripe</button>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js'></script>
+
+    @*<script type='text/javascript'>
+        var myLink = document.querySelector('a[href="#"]');
+        myLink.addEventListener('click', function (e) {
+            e.preventDefault();
+        });</script>*@
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Create a Stripe client.
+
+            var stripe = Stripe('pk_test_51N9S1PBvE2MoUvk1lfnY4CDAPR4pIjpTLFepM3VJWELkN88ntW9sEbkiXLoR5Kn10qEKfPDadUFdIxGXfzzBEqVa00c8Z6jiEC');
+            // Create an instance of Elements.
+            var elements = stripe.elements();
+
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            // Try to match bootstrap 4 styling
+            var style = {
+                base: {
+                    'lineHeight': '1.35',
+                    'fontSize': '1.11rem',
+                    'color': '#495057',
+                    'fontFamily': 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+                }
+            };
+
+            // Card number
+            var card = elements.create('cardNumber', {
+
+                'placeholder': '',
+                'style': style
+            });
+            card.mount('#card-number');
+
+            //CVC
+            var cvc = elements.create('cardCvc', {
+
+                'placeholder': '',
+                'style': style
+            });
+            cvc.mount('#card-cvc');
+
+            // Card expiry
+            var exp = elements.create('cardExpiry', {
+                'placeholder': '', 'style': style
+            });
+            exp.mount('#card-exp');
+            // Handle form submission.
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+
+                        // Inform the user if there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                        console.log(result.token);
+                    }
+                });
+            });
+            // Submit the form with the token ID.
+            function stripeTokenHandler(token) {
+
+                // Insert the token ID into the form so it gets submitted to the server
+                $(".StripeToken").val(token.id);
+                // Submit the form
+                form.submit();
+            }
+        });
+    </script>
+
+
+</body>
